@@ -5,7 +5,7 @@ peline {
         // Set your AWS credentials here or use Jenkins credentials store
         AWS_ACCESS_KEY = credentials('your-aws-access-key-id') // Jenkins credential ID
         AWS_SECRET_KEY = credentials('your-aws-secret-access-key') // Jenkins credential ID
-        AWS_REGION = 'us-west-2' // Change to your desired region
+        AWS_REGION = 'us-east-1' // Change to your desired region
         KEY_NAME = 'firstpair' // Replace with your actual key pair name
     }
 
