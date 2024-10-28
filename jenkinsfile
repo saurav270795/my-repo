@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout your Terraform code from your repository
-                 git 'https://github.com/saurav270795/my-repo.git'
+                  git branch: 'main', url: 'https://github.com/saurav270795/my-repo.git'
             }
         }
 
