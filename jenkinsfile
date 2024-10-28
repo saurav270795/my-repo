@@ -13,7 +13,7 @@ peline {
         stage('Checkout') {
             steps {
                 // Checkout your Terraform code from your repository
-                 git 'git@github.com:saurav270795/my-repo.git'
+                 git 'https://github.com/saurav270795/saurav270795.git'
             }
         }
 
