@@ -1,0 +1,64 @@
+peline {
+    agent any
+
+    environment {
+        // Set your AWS credentials here or use Jenkins credentials store
+        AWS_ACCESS_KEY_ID = credentials('your-aws-access-key-id') // Jenkins credential ID
+        AWS_SECRET_ACCESS_KEY = credentials('your-aws-secret-access-key') // Jenkins credential ID
+        AWS_REGION = 'us-west-2' // Change to your desired region
+        KEY_NAME = 'firstpair' // Replace with your actual key pair name
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your Terraform code from your repository
+                 git 'git@github.com:saurav270795/my-repo.git'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                // Initialize Terraform
+                sh 'terraform init'
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                // Create a Terraform execution plan
+                sh "terraform plan -var=\"aws_region=${AWS_REGION}\" -var=\"key_name=${KEY_NAME}\""
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                // Apply the Terraform configuration
+                sh "terraform apply -var=\"aws_region=${AWS_REGION}\" -var=\"key_name=${KEY_NAME}\" -auto-approve"
+            }
+        }
+        
+        stage('Output') {
+            steps {
+                // Optional: Output the created resources
+                sh 'terraform output'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up workspace or do any other necessary actions
+            cleanWs()
+        }
+        success {
+            // Optional: Notify or perform additional actions on success
+            echo 'Infrastructure created successfully!'
+        }
+        failure {
+            // Optional: Notify or perform additional actions on failure
+            echo 'Infrastructure creation failed!'
+        }
+    }
+}
+ 
